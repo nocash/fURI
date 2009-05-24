@@ -7,7 +7,7 @@
  */
 class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
-	private $resource;
+	protected $resource;
 
 	public function __construct($url = NULL)
 	{
@@ -21,17 +21,46 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 // ============================================================================
 
+	public function method($method)
 	{
+		// Only deal with uppercase method names
+		$method = strtoupper($method);
 
+		switch ( $method )
+		{
+			case 'GET':
 
+				$this->set_option(CURLOPT_HTTPGET, TRUE);
+				break;
 
+			case 'POST':
 
+				$this->set_option(CURLOPT_POST, TRUE);
+				break;
 
+			case 'PUT':
 
+				$this->set_option(CURLOPT_PUT, TRUE);
+				break;
+
+			// DELETE and other methods are unsupported by cURL
+			case 'DELETE':
+			default:
+
+				// Use cURL's custom request option to pull it off
+				$this->set_option(CURLOPT_CUSTOMREQUEST, $method);
+				break;
 		}
+
+		return $this; // For method chaining
 	}
 
+	public function request($url)
 	{
+		$this->apply_headers();
+		$this->apply_options();
+
+		return $this->exec();
 	}
 
 	// @todo Allow option specification?
@@ -40,11 +69,19 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 		return $this->getinfo();
 	}
 
+// ============================================================================
 
+	protected function apply_headers()
 	{
+		$this->set_option(CURLOPT_HTTPHEADER, $this->headers);
 	}
 
+	protected function apply_options()
 	{
+		foreach ( $this->options as $option => $value )
+		{
+			$this->setopt($option, $value);
+		}
 	}
 
 // ============================================================================
