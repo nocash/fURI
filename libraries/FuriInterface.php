@@ -2,13 +2,17 @@
 
 interface FuriInterface {
 
-	public function get($url = NULL);
+	public function get($url);
 
-	public function post($url = NULL);
+	public function post($url);
 
-	public function put($url = NULL);
+	public function put($url);
 
-	public function delete($url = NULL);
+	public function delete($url);
+
+	public function method($method);
+
+	public function request($url);
 
 	public function copy_cookies();
 
