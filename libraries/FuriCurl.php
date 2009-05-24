@@ -2,6 +2,8 @@
 
 /**
  * @todo test switching back and forth between GET and POST
+ * @todo add support for multi handles?
+ * @todo add support for cookie file
  */
 class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
@@ -121,6 +123,11 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 		return curl_close($this->resource);
 	}
 
+	public function copy_handle()
+	{
+		return curl_copy_handle($this->resource);
+	}
+
 	public function error()
 	{
 		return curl_error($this->resource);
@@ -154,6 +161,11 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 	public function setopt_array($options)
 	{
 		return curl_setopt_array($this->resource, $options);
+	}
+
+	public function version($age = CURLVERSION_NOW)
+	{
+		return curl_version($age);
 	}
 
 } // End of fURI cURL Library
