@@ -106,52 +106,52 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 // ============================================================================
 
-	public function close()
+	private function close()
 	{
 		return curl_close($this->resource);
 	}
 
-	public function copy_handle()
+	private function copy_handle()
 	{
 		return curl_copy_handle($this->resource);
 	}
 
-	public function error()
+	private function error()
 	{
 		return curl_error($this->resource);
 	}
 
-	public function errorno()
+	private function errorno()
 	{
 		return curl_errno($this->resource);
 	}
 
-	public function exec()
+	private function exec()
 	{
 		return curl_exec($this->resource);
 	}
 
-	public function getinfo($option = 0)
+	private function getinfo($option = 0)
 	{
 		return curl_getinfo($this->resource, $option);
 	}
 
-	public function init($url = NULL)
+	private function init($url = NULL)
 	{
 		return curl_init($url);
 	}
 
-	public function setopt($option, $value)
+	private function setopt($option, $value)
 	{
 		return curl_setopt($this->resource, $option, $value);
 	}
 
-	public function setopt_array($options)
+	private function setopt_array($options)
 	{
 		return curl_setopt_array($this->resource, $options);
 	}
 
-	public function version($age = CURLVERSION_NOW)
+	private function version($age = CURLVERSION_NOW)
 	{
 		return curl_version($age);
 	}
