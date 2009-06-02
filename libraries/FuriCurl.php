@@ -9,9 +9,9 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 	protected $resource;
 
-	public function __construct($url = NULL)
+	public function __construct()
 	{
-		$this->resource = $this->init($url);
+		$this->resource = $this->init();
 	}
 
 	public function __destruct()
@@ -57,30 +57,50 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 	public function request($url)
 	{
+		$this->set_option(CURLOPT_URL, $url);
+
 		$this->apply_headers();
 		$this->apply_options();
 
 		return $this->exec();
 	}
 
-	// @todo Allow option specification?
-	public function get_info()
-	{
-		return $this->getinfo();
-	}
-
 // ============================================================================
 
-	protected function apply_headers()
+	private function apply_headers()
 	{
 		$this->set_option(CURLOPT_HTTPHEADER, $this->headers);
 	}
 
-	protected function apply_options()
+	private function apply_options()
 	{
 		foreach ( $this->options as $option => $value )
 		{
-			$this->setopt($option, $value);
+			if ( $this->is_furi_option($option) )
+			{
+				$option = $this->furi_opt_to_curl($option);
+			}
+
+			$this->setopt($curlopt, $value);
+		}
+	}
+
+	private function is_furi_option($option)
+	{
+		return ( is_string($option) && substr(strtoupper($option), 0, 5) == 'FURI_' ) ? TRUE : FALSE;
+	}
+
+	private function furi_opt_to_curl($option)
+	{
+		if ( $this->is_furi_option($option) )
+		{
+			$curlopt = str_replace('FURI_', 'CURLOPT_', strtoupper($option));
+			return constant($curlopt);
+		}
+		else
+		{
+			// Option was not a fURI option to begin wtih; cannot convert
+			return FALSE;
 		}
 	}
 
