@@ -5,9 +5,6 @@ abstract class FuriAbstract {
 	protected $options = array();
 	protected $headers = array();
 
-	abstract protected function apply_headers();
-	abstract protected function apply_options();
-
 	public function get($url)
 	{
 		return $this->method('GET')->request($url);
@@ -41,7 +38,6 @@ abstract class FuriAbstract {
 			$this->set_header('Cookie: ' . implode('; ', $cookies));
 		}
 	}
-
 
 	// @todo unsure if/how this behaves with HTTP-X headers
 	public function copy_headers()
@@ -81,14 +77,6 @@ abstract class FuriAbstract {
 	public function set_option($option, $value)
 	{
 		$this->options[$option] = $value;
-	}
-
-	public function set_options($options)
-	{
-		foreach ( $options as $key => $value )
-		{
-			$this->set_option($key, $value);
-		}
 	}
 
 } // End of FuriAbstract class

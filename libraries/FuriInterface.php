@@ -18,16 +18,8 @@ interface FuriInterface {
 
 	public function copy_headers();
 
-	public function get_headers();
-
-	public function get_info();
-
-	public function get_options();
-
 	public function set_header($header);
 
 	public function set_option($option, $value);
-
-	public function set_options($options);
 
 } // End of FuriInterface Interface
