@@ -76,31 +76,7 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 	{
 		foreach ( $this->options as $option => $value )
 		{
-			if ( $this->is_furi_option($option) )
-			{
-				$option = $this->furi_opt_to_curl($option);
-			}
-
 			$this->setopt($curlopt, $value);
-		}
-	}
-
-	private function is_furi_option($option)
-	{
-		return ( is_string($option) && substr(strtoupper($option), 0, 5) == 'FURI_' ) ? TRUE : FALSE;
-	}
-
-	private function furi_opt_to_curl($option)
-	{
-		if ( $this->is_furi_option($option) )
-		{
-			$curlopt = str_replace('FURI_', 'CURLOPT_', strtoupper($option));
-			return constant($curlopt);
-		}
-		else
-		{
-			// Option was not a fURI option to begin wtih; cannot convert
-			return FALSE;
 		}
 	}
 
