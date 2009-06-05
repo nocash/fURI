@@ -2,7 +2,7 @@
 
 class Furi_Core {
 
-	public static function factory($url = NULL)
+	public static function factory()
 	{
 		if ( function_exists('curl_init') )
 		{

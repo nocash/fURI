@@ -59,16 +59,6 @@ abstract class FuriAbstract {
 		}
 	}
 
-	public function get_headers()
-	{
-		return $this->headers;
-	}
-
-	public function get_options()
-	{
-		return $this->options;
-	}
-
 	public function set_header($header)
 	{
 		$this->headers[] = $header;
