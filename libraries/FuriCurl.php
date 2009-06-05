@@ -27,29 +27,6 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 	Interface Methods
 ---------------------------------------------------------------------------- */
 
-	public function data($data)
-	{
-		// Only string or array is supported by the CURLOPT_POSTDATA option
-		if ( ! is_string($data) && ! is_array($data) )
-		{
-			// If it's an object we can probably convert it
-			if ( is_object($data) )
-			{
-				$data = (array) $data;
-			}
-			else
-			{
-				// @todo add error handling
-			}
-		}
-
-		// Store data until we're sure we know the request method
-		$this->postdata = $data;
-
-		// Method chaining
-		return $this;
-	}
-
 	public function method($method)
 	{
 		// Only deal with uppercase method names

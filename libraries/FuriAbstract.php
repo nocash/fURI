@@ -22,13 +22,15 @@ abstract class FuriAbstract {
 		return $this->method('GET')->request($url);
 	}
 
-	public function post($url)
+	public function post($url, $data)
 	{
+		$this->set_option('postdata', $data);
 		return $this->method('POST')->request($url);
 	}
 
-	public function put($url)
+	public function put($url, $file)
 	{
+		$this->set_option('infile', $file);
 		return $this->method('PUT')->request($url);
 	}
 
