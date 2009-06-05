@@ -11,6 +11,17 @@ interface FuriInterface {
 	public function delete($url);
 
 // ----------------------------------------------------------------------------
+
+	/**
+	 * Data
+	 *
+	 * Yeah, I called it data and it takes an argument named $data, you wanna
+	 * fight about it?
+	 *
+	 * @param string|array $data
+	 */
+	public function data($data);
+
 	public function method($method);
 
 	public function request($url);
