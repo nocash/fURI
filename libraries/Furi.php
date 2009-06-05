@@ -6,11 +6,11 @@ class Furi_Core {
 	{
 		if ( function_exists('curl_init') )
 		{
-			return new FuriCurl($url);
+			return new FuriCurl();
 		}
 		else
 		{
-			return new FuriStream($url);
+			return new FuriStream();
 		}
 	}
 

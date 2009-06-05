@@ -2,9 +2,6 @@
 
 abstract class FuriAbstract {
 
-	protected $headers = array();
-	protected $options = array();
-
 	public function __construct()
 	{
 		// Load default options from config file
@@ -15,6 +12,10 @@ abstract class FuriAbstract {
 			$this->set_option($option, $value);
 		}
 	}
+
+/* ----------------------------------------------------------------------------
+	Interface Methods
+---------------------------------------------------------------------------- */
 
 	public function get($url)
 	{
@@ -68,16 +69,6 @@ abstract class FuriAbstract {
 				}
 			}
 		}
-	}
-
-	public function set_header($header)
-	{
-		$this->headers[] = $header;
-	}
-
-	public function set_option($option, $value)
-	{
-		$this->options[$option] = $value;
 	}
 
 } // End FuriAbstract

@@ -7,11 +7,15 @@
  */
 class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
-	protected $resource;
+	private $ch;
+	private $headers = array();
+	private $method = '';
+	private $postdata = '';
 
 	public function __construct()
 	{
-		$this->resource = $this->init();
+		$this->ch = $this->init();
+		parent::__construct();
 	}
 
 	public function __destruct()
@@ -23,6 +27,11 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 	Interface Methods
 ---------------------------------------------------------------------------- */
 
+	public function data($data)
+	{
+
+	}
+
 	public function method($method)
 	{
 		// Only deal with uppercase method names
@@ -32,17 +41,17 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 		{
 			case 'GET':
 
-				$this->set_option(CURLOPT_HTTPGET, TRUE);
+				$this->setopt(CURLOPT_HTTPGET, TRUE);
 				break;
 
 			case 'POST':
 
-				$this->set_option(CURLOPT_POST, TRUE);
+				$this->setopt(CURLOPT_POST, TRUE);
 				break;
 
 			case 'PUT':
 
-				$this->set_option(CURLOPT_PUT, TRUE);
+				$this->setopt(CURLOPT_PUT, TRUE);
 				break;
 
 			// DELETE and other methods are unsupported by cURL
@@ -50,7 +59,7 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 			default:
 
 				// Use cURL's custom request option to pull it off
-				$this->set_option(CURLOPT_CUSTOMREQUEST, $method);
+				$this->setopt(CURLOPT_CUSTOMREQUEST, $method);
 				break;
 		}
 
@@ -59,12 +68,26 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 	public function request($url)
 	{
-		$this->set_option(CURLOPT_URL, $url);
-
+		$this->setopt(CURLOPT_URL, $url);
 		$this->apply_headers();
-		$this->apply_options();
 
 		return $this->exec();
+	}
+
+	public function set_header($header)
+	{
+		$this->headers[] = $header;
+	}
+
+	public function set_option($option, $value)
+	{
+		// Convert fURI option to cURL constant name
+		$curlopt = 'CURLOPT_' . strtoupper($option);
+
+		if ( defined($curlopt) )
+		{
+			return $this->setopt(constant($curlopt), $value);
+		}
 	}
 
 /* ----------------------------------------------------------------------------
@@ -73,50 +96,41 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 	private function apply_headers()
 	{
-		$this->set_option(CURLOPT_HTTPHEADER, $this->headers);
-	}
-
-	private function apply_options()
-	{
-		foreach ( $this->options as $option => $value )
-		{
-			$this->setopt($curlopt, $value);
-		}
+		$this->setopt(CURLOPT_HTTPHEADER, $this->headers);
 	}
 
 /* ----------------------------------------------------------------------------
 	cURL Wrapper Methods
 ---------------------------------------------------------------------------- */
 
-
 	private function close()
 	{
-		return curl_close($this->resource);
+		return curl_close($this->ch);
 	}
 
 	private function copy_handle()
 	{
-		return curl_copy_handle($this->resource);
+		return curl_copy_handle($this->ch);
 	}
 
 	private function error()
 	{
-		return curl_error($this->resource);
+		return curl_error($this->ch);
 	}
 
 	private function errorno()
 	{
-		return curl_errno($this->resource);
+		return curl_errno($this->ch);
 	}
 
 	private function exec()
 	{
-		return curl_exec($this->resource);
+		return curl_exec($this->ch);
 	}
 
 	private function getinfo($option = 0)
 	{
-		return curl_getinfo($this->resource, $option);
+		return curl_getinfo($this->ch, $option);
 	}
 
 	private function init($url = NULL)
@@ -126,12 +140,12 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 	private function setopt($option, $value)
 	{
-		return curl_setopt($this->resource, $option, $value);
+		return curl_setopt($this->ch, $option, $value);
 	}
 
 	private function setopt_array($options)
 	{
-		return curl_setopt_array($this->resource, $options);
+		return curl_setopt_array($this->ch, $options);
 	}
 
 	private function version($age = CURLVERSION_NOW)
@@ -139,4 +153,4 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 		return curl_version($age);
 	}
 
-} // End of fURI cURL Library
+} // End FuriCurl_Core

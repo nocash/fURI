@@ -15,10 +15,14 @@ interface FuriInterface {
 	/**
 	 * Data
 	 *
+	 * Used to set the data that will be included as the URL query string,
+	 * POST data, etc.
+	 *
 	 * Yeah, I called it data and it takes an argument named $data, you wanna
 	 * fight about it?
 	 *
 	 * @param string|array $data
+	 * @return object returns $this for method chaining
 	 */
 	public function data($data);
 
