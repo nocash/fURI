@@ -9,8 +9,6 @@ class FuriCurl_Core extends FuriAbstract implements FuriInterface {
 
 	private $ch;
 	private $headers = array();
-	private $method = '';
-	private $postdata = '';
 
 	public function __construct()
 	{
