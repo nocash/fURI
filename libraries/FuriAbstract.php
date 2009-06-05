@@ -2,8 +2,19 @@
 
 abstract class FuriAbstract {
 
-	protected $options = array();
 	protected $headers = array();
+	protected $options = array();
+
+	public function __construct()
+	{
+		// Load default options from config file
+		$default_options = Kohana::config('furi.defaults.options');
+
+		foreach (  $default_options as $option => $value )
+		{
+			$this->set_option($option, $value);
+		}
+	}
 
 	public function get($url)
 	{
