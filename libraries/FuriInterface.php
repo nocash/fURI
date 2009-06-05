@@ -10,9 +10,12 @@ interface FuriInterface {
 
 	public function delete($url);
 
+// ----------------------------------------------------------------------------
 	public function method($method);
 
 	public function request($url);
+
+// ----------------------------------------------------------------------------
 
 	public function copy_cookies();
 
@@ -22,4 +25,4 @@ interface FuriInterface {
 
 	public function set_option($option, $value);
 
-} // End of FuriInterface Interface
+} // End FuriInterface

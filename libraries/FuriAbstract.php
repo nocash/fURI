@@ -79,4 +79,4 @@ abstract class FuriAbstract {
 		$this->options[$option] = $value;
 	}
 
-} // End of FuriAbstract class
+} // End FuriAbstract
