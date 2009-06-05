@@ -24,7 +24,7 @@ abstract class FuriAbstract {
 
 	public function post($url, $data)
 	{
-		$this->set_option('postdata', $data);
+		$this->set_option('postfields', $data);
 		return $this->method('POST')->request($url);
 	}
 
