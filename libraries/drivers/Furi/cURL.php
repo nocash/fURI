@@ -16,7 +16,11 @@ class Furi_cURL_Driver extends Furi_Driver {
 	
 	public function __construct()
 	{
+		// Create a cURL handle
 		$this->ch = curl_init();
+		
+		// Set global cURL options
+		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
 	}
 
 	public function __destruct()
@@ -30,7 +34,8 @@ class Furi_cURL_Driver extends Furi_Driver {
 
 	public function get($uri)
 	{
-		
+		curl_setopt($this->ch, CURLOPT_URL, $uri);
+		return curl_exec($this->ch);
 	}
 
 } // End Furi_cURL_Driver
