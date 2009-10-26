@@ -34,7 +34,18 @@ class Furi_cURL_Driver extends Furi_Driver {
 
 	public function get($uri)
 	{
-		curl_setopt($this->ch, CURLOPT_URL, $uri);
+		curl_setopt($this->ch, CURLOPT_URL,     $uri);
+		curl_setopt($this->ch, CURLOPT_HTTPGET, TRUE);
+		
+		return curl_exec($this->ch);
+	}
+	
+	public function post($uri, $data)
+	{
+		curl_setopt($this->ch, CURLOPT_URL,        $uri);
+		curl_setopt($this->ch, CURLOPT_POST,       TRUE);
+		curl_setopt($this->ch, CURLOPT_POSTFIELDS, $data);
+		
 		return curl_exec($this->ch);
 	}
 

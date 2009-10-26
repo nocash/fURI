@@ -20,11 +20,33 @@ class Furi_Stream_Driver extends Furi_Driver {
 	
 	public function get($uri)
 	{
+		$this->options['http']['method'] = 'GET';
+		
 		$context = stream_context_create($this->options);
 		$handle = fopen($uri, 'rb', FALSE, $context);
-		
 		$content = stream_get_contents($handle);
+		fclose($handle);
 		
+		return $content;
+	}
+	
+	/**
+	 * Perform a POST request.
+	 * 
+	 * @todo should also support POSTing files
+	 * 
+	 * @param $uri
+	 * @param $data
+	 */
+	public function post($uri, $data)
+	{
+		$this->options['http']['method'] = 'POST';
+		$this->options['http']['header'] = 'Content-Type: application/x-www-form-urlencoded';
+		$this->options['http']['content'] = http_build_query($data);
+		
+		$context = stream_context_create($this->options);
+		$handle = fopen($uri, 'rb', FALSE, $context);
+		$content = stream_get_contents($handle);
 		fclose($handle);
 		
 		return $content;

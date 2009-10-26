@@ -72,5 +72,30 @@ class Furi_Core {
 	{
 		return $this->driver->get($uri);
 	}
+	
+	public function post($uri, $data)
+	{
+		if ( ! is_array($data) )
+		{
+			if ( is_string($data) )
+			{
+				$query = $data;
+				$data = array();
+				
+				parse_str($query, $data);
+			}
+			elseif ( is_object($data) )
+			{
+				$data = (array) $data;
+			}
+			else
+			{
+				// Unsupported type
+				return FALSE;
+			}
+		}
+		
+		return $this->driver->post($uri, $data);
+	}
 
 } // End Furi_Core

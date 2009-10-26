@@ -8,5 +8,7 @@
 abstract class Furi_Driver {
 
 	abstract public function get($uri);
+	
+	abstract public function post($uri, $data);
 
 } // End Furi_Driver
