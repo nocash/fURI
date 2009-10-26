@@ -43,6 +43,19 @@ class Furi_Core {
 		// Append default fURI configuration
 		$config += Kohana::config('furi');
 		
+		// Check for 'auto' driver and adjust configuration
+		if ( strtolower($config['driver'] == 'auto') )
+		{
+			if ( function_exists('curl_init') )
+			{
+				$config['driver'] = 'cURL';
+			}
+			else
+			{
+				$config['driver'] = 'Stream';
+			}
+		}
+		
 		// Save the config in the object
 		$this->config = $config;
 		

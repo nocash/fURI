@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
-$config['driver'] = 'cURL';
+$config['driver'] = 'auto';
 
 // End fURI Config
